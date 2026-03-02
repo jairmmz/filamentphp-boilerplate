@@ -47,7 +47,7 @@
  
  ### 1. Clone the repository
  ```bash
- git clone https://github.com/jairmmz/filamentphp-boirlerplate.git
+ git clone https://github.com/jairmmz/filamentphp-boilerplate.git
  cd filamentphp-boirlerplate
  ```
  
