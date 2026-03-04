@@ -29,18 +29,12 @@ class UserExporter extends Exporter
                 ->formatStateUsing(
                     fn (bool $state) => $state ? 'Activo' : 'Inactivo'
                 ),
-
-            ExportColumn::make('created_at')
-                ->label('Fecha de creación')
-                ->formatStateUsing(
-                    fn ($state) => $state->format('d/m/Y H:i:s')
-                ),
         ];
     }
 
     public static function getCompletedNotificationBody(Export $export): string
     {
-        $body = 'Su exportación de usuario se ha completado y ' . Number::format($export->successful_rows) . ' ' . str('fila')->plural($export->successful_rows) . ' exportado.';
+        $body = 'Su exportación de usuario se ha completado y ' . Number::format($export->successful_rows) . ' ' . str('fila')->plural($export->successful_rows) . ' ' . str('exportada')->plural($export->successful_rows);
 
         if ($failedRowsCount = $export->getFailedRowsCount()) {
             $body .= ' ' . Number::format($failedRowsCount) . ' ' . str('fila')->plural($failedRowsCount) . ' error al exportar.';

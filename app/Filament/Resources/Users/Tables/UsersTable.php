@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Users\Tables;
 
 use App\Filament\Exports\UserExporter;
+use App\Filament\Imports\UserImporter;
 use App\Services\PdfService;
 use Filament\Actions\Action;
 use Filament\Actions\BulkAction;
@@ -10,6 +11,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ExportAction;
+use Filament\Actions\ImportAction;
 use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Support\Icons\Heroicon;
@@ -93,13 +95,19 @@ class UsersTable
                 ]),
             ])
             ->headerActions([
-                ExportAction::make()
+                ImportAction::make('importUsersExcel')
+                    ->importer(UserImporter::class)
+                    ->icon(Heroicon::ArrowUpTray)
+                    ->label('Importar CSV')
+                    ->color('warning'),
+
+                ExportAction::make('exportUsersExcel')
                     ->exporter(UserExporter::class)
                     ->icon(Heroicon::ArrowDownTray)
-                    ->label('Exportar Excel / CSV')
+                    ->label('Exportar Excel')
                     ->color('success'),
 
-                Action::make('exportPdf')
+                Action::make('exportUsersPdf')
                     ->label('Exportar PDF')
                     ->color('danger')
                     ->icon(Heroicon::ArrowDownCircle)
