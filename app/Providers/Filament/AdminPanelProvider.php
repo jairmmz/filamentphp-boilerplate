@@ -32,7 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->viteTheme('resources/css/filament/admin/theme.css')
-            ->brandName('Academia Pre')
+            ->brandName('Panel')
             ->login()
             ->passwordReset()
             ->colors([

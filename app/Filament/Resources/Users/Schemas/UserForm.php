@@ -44,12 +44,13 @@ class UserForm
                     ->dehydrated(false),
 
                 Select::make('roles')
-                    ->label('Role')
+                    ->label('Rol')
                     ->required()
                     ->relationship('roles', 'name',
                         fn ($query) => $query->where('name', '!=', User::ROLE_SUPER_ADMIN))
                     ->searchable()
-                    ->preload(),
+                    ->preload()
+                    ->columnSpan(1),
 
                 Toggle::make('is_active')
                     ->label('Estado')
@@ -58,7 +59,9 @@ class UserForm
                     ->onColor('success')
                     ->offColor('primary')
                     ->default(true)
-                    ->belowContent('Si esta activo el usuario podrá acceder al panel administrador'),
+                    ->inline(false)
+                    ->belowContent('Si esta activo el usuario podrá acceder al panel administrador')
+                    ->columnSpan(1),
             ]);
     }
 }

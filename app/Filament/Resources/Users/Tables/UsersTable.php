@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Users\Tables;
 
 use App\Filament\Exports\UserExporter;
+use App\Services\PdfService;
 use Filament\Actions\Action;
 use Filament\Actions\BulkAction;
 use Filament\Actions\BulkActionGroup;
@@ -101,39 +102,15 @@ class UsersTable
                 Action::make('exportPdf')
                     ->label('Exportar PDF')
                     ->color('danger')
-                    ->action(function (Table $table) {
-                        try {
-                            $query = $table->getLivewire()->getFilteredSortedTableQuery();
-                            $users = $query->get();
+                    ->action(function (Table $table, PdfService $service) {
+                        $users = $table->getLivewire()->getFilteredSortedTableQuery()->get();
 
-                            $mpdf = new Mpdf([
-                                'mode' => 'utf-8',
-                                'format' => 'A4'
-                            ]);
-
-                            $mpdf->SetTitle('Reporte de usuarios');
-                            $mpdf->SetAuthor('Nombre de la Institución');
-                            $mpdf->SetDisplayMode('fullpage');
-                            $mpdf->simpleTables = true;
-                            $mpdf->packTableData = true;
-
-                            $html = view('exports.pdf.users', compact('users'))->render();
-
-                            $mpdf->WriteHTML($html);
-
-                            $now = now()->format('d_m_Y-H_i_s');
-
-                            return response()->streamDownload(
-                                fn () => print($mpdf->Output('', 'S')),
-                                'usuarios_' . $now . '.pdf'
-                            );
-                        } catch (\Exception $e) {
-                            Notification::make()
-                                ->title('Error al exportar PDF')
-                                ->body($e->getMessage())
-                                ->danger()
-                                ->send();
-                        }
+                        return $service->generate(
+                            'exports.pdf.users',
+                            compact('users'),
+                            'reporte_usuarios',
+                            ['title' => 'Reporte de usuarios']
+                        );
                     }),
             ]);
     }
