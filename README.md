@@ -167,8 +167,3 @@ php artisan ide-helper:meta
  ```bash
  php artisan shield:generate --all
  ```
- 
- To create a super admin:
- ```bash
- php artisan shield:super-admin
- ```
