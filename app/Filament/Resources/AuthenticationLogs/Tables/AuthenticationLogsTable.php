@@ -66,7 +66,8 @@ class AuthenticationLogsTable
                 TextColumn::make('logout_at')
                     ->label('Desconectado el')
                     ->dateTime('d/m/Y H:i:s')
-                    ->sortable(),
+                    ->sortable()
+                    ->placeholder('-'),
 
                 TextColumn::make('last_activity_at')
                     ->label('Última actividad')

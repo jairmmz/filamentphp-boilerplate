@@ -15,7 +15,7 @@ class AuthenticationLogInfolist
             ->components([
                 Section::make('Información de Acceso')
                     ->icon('heroicon-o-shield-check')
-                    ->columns(2)
+                    ->columns(4)
                     ->schema([
                         TextEntry::make('ip_address')
                             ->label('Dirección IP')
@@ -32,7 +32,8 @@ class AuthenticationLogInfolist
                         TextEntry::make('logout_at')
                             ->label('Desconectado el')
                             ->icon('heroicon-o-arrow-left-end-on-rectangle')
-                            ->dateTime('d/m/Y H:i:s'),
+                            ->dateTime('d/m/Y H:i:s')
+                            ->placeholder('-'),
 
                         TextEntry::make('last_activity_at')
                             ->label('Última actividad')
