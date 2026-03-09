@@ -58,7 +58,10 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasRoles, HasFactory, Notifiable, TwoFactorAuthenticatable, AuthenticationLoggable;
+    use HasFactory;
+    use Notifiable;
+    use TwoFactorAuthenticatable;
+    use AuthenticationLoggable;
 
     public const string ROLE_SUPER_ADMIN = 'Super Admin';
 
