@@ -62,6 +62,7 @@ class User extends Authenticatable implements FilamentUser
     use Notifiable;
     use TwoFactorAuthenticatable;
     use AuthenticationLoggable;
+    use HasRoles;
 
     public const string ROLE_SUPER_ADMIN = 'Super Admin';
 
