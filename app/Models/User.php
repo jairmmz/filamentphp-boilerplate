@@ -20,6 +20,8 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog;
 use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
@@ -82,6 +84,7 @@ class User extends Authenticatable implements FilamentUser
     use HasFactory;
 
     use HasRoles;
+    use LogsActivity;
     use Notifiable;
     use TwoFactorAuthenticatable;
 
@@ -144,5 +147,13 @@ class User extends Authenticatable implements FilamentUser
         }
 
         return true;
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['name', 'email', 'is_active'])
+            ->logOnlyDirty()
+            ->dontLogEmptyChanges();
     }
 }
