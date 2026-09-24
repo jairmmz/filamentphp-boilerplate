@@ -35,7 +35,7 @@ class TwoFactorAuthenticationTest extends TestCase
             ->get(route('two-factor.show'))
             ->assertOk()
             ->assertSee('Two-factor authentication')
-            ->assertSee('Disabled');
+            ->assertSee(__('Disabled'));
     }
 
     public function test_two_factor_settings_page_requires_password_confirmation_when_enabled(): void
