@@ -1,0 +1,15 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    paths:
+        - app
+        - tests
+
+    level: 8
+
+    tmpDir: storage/framework/cache/phpstan
+
+    ignoreErrors:
+        - identifier: argument.type
+          path: app/Providers/Filament/AdminPanelProvider.php
