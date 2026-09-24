@@ -28,6 +28,11 @@ class HealthStatusPageTest extends TestCase
         Permission::create(['name' => 'View:HealthStatus', 'guard_name' => 'web']);
         $user->givePermissionTo('View:HealthStatus');
 
-        $this->actingAs($user)->get('/admin/health-status')->assertOk()->assertSee('Cache');
+        $this->actingAs($user)->get('/admin/health-status')
+            ->assertOk()
+            ->assertSee('Estado de salud')
+            ->assertSee('Caché')
+            ->assertSee('La caché responde correctamente.')
+            ->assertDontSee('expected to be');
     }
 }

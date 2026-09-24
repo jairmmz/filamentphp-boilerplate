@@ -19,13 +19,14 @@ class HealthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Health::checks([
-            CacheCheck::new(),
-            DatabaseCheck::new(),
-            DatabaseSizeCheck::new(),
-            DebugModeCheck::new(),
-            OptimizedAppCheck::new(),
-            QueueCheck::new(),
+            CacheCheck::new()->label('Caché'),
+            DatabaseCheck::new()->label('Base de datos'),
+            DatabaseSizeCheck::new()->label('Tamaño de la base de datos'),
+            DebugModeCheck::new()->label('Modo depuración'),
+            OptimizedAppCheck::new()->label('Aplicación optimizada'),
+            QueueCheck::new()->label('Cola'),
             UsedDiskSpaceCheck::new()
+                ->label('Espacio en disco')
                 ->warnWhenUsedSpaceIsAbovePercentage(70)
                 ->failWhenUsedSpaceIsAbovePercentage(90),
         ]);
