@@ -251,7 +251,7 @@ class ManageGeneralSettings extends SettingsPage
                                         'url' => 'Ingresa una URL válida (debe incluir https://).',
                                         'max' => 'La URL no puede superar los 255 caracteres.',
                                     ]),
-                            ])
+                            ]),
                     ])
                     ->columnSpanFull(),
 
@@ -348,7 +348,7 @@ class ManageGeneralSettings extends SettingsPage
                                         'min_digits' => 'El Pixel ID debe tener al menos 15 dígitos.',
                                         'max' => 'El Pixel ID no puede superar los 16 dígitos.',
                                     ]),
-                            ])
+                            ]),
                     ])
                     ->columnSpanFull(),
             ]);

@@ -16,9 +16,9 @@ class StatsOverview extends StatsOverviewWidget
 
     protected static bool $isLazy = true;
 
-    protected ?string $heading = "Estadísticas generales";
+    protected ?string $heading = 'Estadísticas generales';
 
-    protected ?string $description = "Estadísticas generales del sistema.";
+    protected ?string $description = 'Estadísticas generales del sistema.';
 
     protected static ?int $sort = 1;
 
@@ -29,16 +29,16 @@ class StatsOverview extends StatsOverviewWidget
         $totalPermissions = Permission::query()->count();
 
         return [
-            Stat::make("Total de usuarios", $totalUsers)
-                ->description("Total de usuarios registrados")
+            Stat::make('Total de usuarios', $totalUsers)
+                ->description('Total de usuarios registrados')
                 ->icon(Heroicon::User),
 
-            Stat::make("Total de roles", $totalRoles)
-                ->description("Total de roles registrados")
+            Stat::make('Total de roles', $totalRoles)
+                ->description('Total de roles registrados')
                 ->icon(Heroicon::Clipboard),
 
-            Stat::make("Total de permisos", $totalPermissions)
-                ->description("Total de permisos registrados")
+            Stat::make('Total de permisos', $totalPermissions)
+                ->description('Total de permisos registrados')
                 ->icon(Heroicon::Key),
         ];
     }

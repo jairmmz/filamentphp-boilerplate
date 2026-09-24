@@ -17,18 +17,18 @@ class AuthenticationLogsTable
     {
         return $table
             ->columns([
-                TextColumn::make("ip_address")
-                    ->label("Dirección IP")
+                TextColumn::make('ip_address')
+                    ->label('Dirección IP')
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make("device_name")
-                    ->label("Navegador/Dispositivo")
+                TextColumn::make('device_name')
+                    ->label('Navegador/Dispositivo')
                     ->searchable()
-                    ->default("Unknown Device"),
+                    ->default('Unknown Device'),
 
-                TextColumn::make("user_agent")
-                    ->label("User Agent")
+                TextColumn::make('user_agent')
+                    ->label('User Agent')
                     ->searchable()
                     ->wrap(),
 
@@ -107,5 +107,4 @@ class AuthenticationLogsTable
             ])
             ->defaultSort('login_at', 'desc');
     }
-
 }

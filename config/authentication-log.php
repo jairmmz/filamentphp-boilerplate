@@ -1,5 +1,17 @@
 <?php
 
+use Illuminate\Auth\Events\Failed;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Auth\Events\Logout;
+use Illuminate\Auth\Events\OtherDeviceLogout;
+use Rappasoft\LaravelAuthenticationLog\Listeners\FailedLoginListener;
+use Rappasoft\LaravelAuthenticationLog\Listeners\LoginListener;
+use Rappasoft\LaravelAuthenticationLog\Listeners\LogoutListener;
+use Rappasoft\LaravelAuthenticationLog\Listeners\OtherDeviceLogoutListener;
+use Rappasoft\LaravelAuthenticationLog\Notifications\FailedLogin;
+use Rappasoft\LaravelAuthenticationLog\Notifications\NewDevice;
+use Rappasoft\LaravelAuthenticationLog\Notifications\SuspiciousActivity;
+
 return [
     // The database table name
     // You can change this if the database keys get too long for your driver
@@ -10,17 +22,17 @@ return [
 
     // The events the package listens for to log
     'events' => [
-        'login' => \Illuminate\Auth\Events\Login::class,
-        'failed' => \Illuminate\Auth\Events\Failed::class,
-        'logout' => \Illuminate\Auth\Events\Logout::class,
-        'other-device-logout' => \Illuminate\Auth\Events\OtherDeviceLogout::class,
+        'login' => Login::class,
+        'failed' => Failed::class,
+        'logout' => Logout::class,
+        'other-device-logout' => OtherDeviceLogout::class,
     ],
 
     'listeners' => [
-        'login' => \Rappasoft\LaravelAuthenticationLog\Listeners\LoginListener::class,
-        'failed' => \Rappasoft\LaravelAuthenticationLog\Listeners\FailedLoginListener::class,
-        'logout' => \Rappasoft\LaravelAuthenticationLog\Listeners\LogoutListener::class,
-        'other-device-logout' => \Rappasoft\LaravelAuthenticationLog\Listeners\OtherDeviceLogoutListener::class,
+        'login' => LoginListener::class,
+        'failed' => FailedLoginListener::class,
+        'logout' => LogoutListener::class,
+        'other-device-logout' => OtherDeviceLogoutListener::class,
     ],
 
     'notifications' => [
@@ -33,7 +45,7 @@ return [
             'location' => function_exists('geoip'),
 
             // The Notification class to send
-            'template' => \Rappasoft\LaravelAuthenticationLog\Notifications\NewDevice::class,
+            'template' => NewDevice::class,
 
             // Rate limiting for notifications
             'rate_limit' => env('NEW_DEVICE_NOTIFICATION_RATE_LIMIT', 3),
@@ -52,7 +64,7 @@ return [
             'location' => function_exists('geoip'),
 
             // The Notification class to send
-            'template' => \Rappasoft\LaravelAuthenticationLog\Notifications\FailedLogin::class,
+            'template' => FailedLogin::class,
 
             // Rate limiting for notifications
             'rate_limit' => env('FAILED_LOGIN_NOTIFICATION_RATE_LIMIT', 5),
@@ -67,7 +79,7 @@ return [
             'location' => function_exists('geoip'),
 
             // The Notification class to send
-            'template' => \Rappasoft\LaravelAuthenticationLog\Notifications\SuspiciousActivity::class,
+            'template' => SuspiciousActivity::class,
 
             // Rate limiting for notifications
             'rate_limit' => env('SUSPICIOUS_ACTIVITY_NOTIFICATION_RATE_LIMIT', 3),
@@ -119,9 +131,9 @@ return [
 
     // If you are behind an CDN proxy, set 'behind_cdn.http_header_field' to the corresponding http header field of your cdn
     // For cloudflare you can have look at: https://developers.cloudflare.com/fundamentals/get-started/reference/http-request-headers/
-//    'behind_cdn' => [
-//        'http_header_field' => 'HTTP_CF_CONNECTING_IP' // used by Cloudflare
-//    ],
+    //    'behind_cdn' => [
+    //        'http_header_field' => 'HTTP_CF_CONNECTING_IP' // used by Cloudflare
+    //    ],
 
     // If you are not a cdn user, use false
     'behind_cdn' => false,

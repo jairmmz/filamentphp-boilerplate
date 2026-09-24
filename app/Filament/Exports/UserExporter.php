@@ -34,10 +34,10 @@ class UserExporter extends Exporter
 
     public static function getCompletedNotificationBody(Export $export): string
     {
-        $body = 'Su exportación de usuario se ha completado y ' . Number::format($export->successful_rows) . ' ' . str('fila')->plural($export->successful_rows) . ' ' . str('exportada')->plural($export->successful_rows);
+        $body = 'Su exportación de usuario se ha completado y '.Number::format($export->successful_rows).' '.str('fila')->plural($export->successful_rows).' '.str('exportada')->plural($export->successful_rows);
 
         if ($failedRowsCount = $export->getFailedRowsCount()) {
-            $body .= ' ' . Number::format($failedRowsCount) . ' ' . str('fila')->plural($failedRowsCount) . ' error al exportar.';
+            $body .= ' '.Number::format($failedRowsCount).' '.str('fila')->plural($failedRowsCount).' error al exportar.';
         }
 
         return $body;

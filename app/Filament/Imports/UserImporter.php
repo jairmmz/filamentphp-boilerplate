@@ -49,10 +49,10 @@ class UserImporter extends Importer
 
     public static function getCompletedNotificationBody(Import $import): string
     {
-        $body = 'Su importación de usuario se ha completado y ' . Number::format($import->successful_rows) . ' ' . str('fila')->plural($import->successful_rows) . ' ' . str('importada')->plural($import->successful_rows);
+        $body = 'Su importación de usuario se ha completado y '.Number::format($import->successful_rows).' '.str('fila')->plural($import->successful_rows).' '.str('importada')->plural($import->successful_rows);
 
         if ($failedRowsCount = $import->getFailedRowsCount()) {
-            $body .= ' ' . Number::format($failedRowsCount) . ' ' . str('fila')->plural($failedRowsCount) . ' fallo en la importación.';
+            $body .= ' '.Number::format($failedRowsCount).' '.str('fila')->plural($failedRowsCount).' fallo en la importación.';
         }
 
         return $body;

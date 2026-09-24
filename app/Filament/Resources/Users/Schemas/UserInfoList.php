@@ -31,11 +31,11 @@ class UserInfoList
                         TextEntry::make('is_active')
                             ->label('Estado')
                             ->badge()
-                            ->icon(fn(bool $state) => $state ? Heroicon::CheckCircle : Heroicon::XCircle)
+                            ->icon(fn (bool $state) => $state ? Heroicon::CheckCircle : Heroicon::XCircle)
                             ->formatStateUsing(
-                                fn(bool $state) => $state ? "Activo" : "Inactivo",
+                                fn (bool $state) => $state ? 'Activo' : 'Inactivo',
                             )
-                            ->color(fn(bool $state) => $state ? "success" : "danger"),
+                            ->color(fn (bool $state) => $state ? 'success' : 'danger'),
                     ]),
 
                 Grid::make(2)
@@ -46,8 +46,8 @@ class UserInfoList
 
                         TextEntry::make('updated_at')
                             ->label('Actualizado el')
-                            ->dateTime('d/m/Y H:i:s')
-                    ])
+                            ->dateTime('d/m/Y H:i:s'),
+                    ]),
             ])->columns(1);
     }
 }
