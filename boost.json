@@ -1,0 +1,34 @@
+{
+    "agents": [
+        "antigravity",
+        "claude_code",
+        "codex",
+        "opencode",
+        "zed",
+        "copilot"
+    ],
+    "cloud": true,
+    "guidelines": true,
+    "mcp": true,
+    "nightwatch": false,
+    "packages": [
+        "achyutn/filament-log-viewer",
+        "filament/filament",
+        "fruitcake/laravel-debugbar"
+    ],
+    "sail": true,
+    "skills": [
+        "infer-conventions",
+        "deploying-to-cloud",
+        "fortify-development",
+        "laravel-best-practices",
+        "testing-best-practices",
+        "fluxui-development",
+        "livewire-development",
+        "tailwindcss-development",
+        "filament-log-viewer-development",
+        "filament-development",
+        "debug-using-debugbar",
+        "blaze-optimize"
+    ]
+}
