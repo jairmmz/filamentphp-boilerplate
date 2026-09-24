@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 12.53.0.
+ * Generated for Laravel 12.69.2.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -353,7 +353,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Get the path to the views directory.
-         * 
+         *
          * This method returns the first configured path in the array of view paths.
          *
          * @param string $path
@@ -1280,9 +1280,9 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns true if the container can return an entry for the given identifier.
-         * 
+         *
          * Returns false otherwise.
-         * 
+         *
          * `has($id)` returning true does not mean that `get($id)` will not throw an exception.
          * It does however mean that `get($id)` will not throw a `NotFoundExceptionInterface`.
          *
@@ -2607,7 +2607,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Log the user out of the application on their current device only.
-         * 
+         *
          * This method does not cycle the "remember" token.
          *
          * @return void
@@ -2621,7 +2621,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Invalidate other sessions for the current user.
-         * 
+         *
          * The application must be using the AuthenticateSession middleware.
          *
          * @param string $password
@@ -3585,7 +3585,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Register the routes for handling broadcast authentication and sockets.
-         * 
+         *
          * Alias of "routes" method.
          *
          * @param array|null $attributes
@@ -3832,7 +3832,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Dispatch a command to its appropriate handler in the current process.
-         * 
+         *
          * Queueable jobs will be dispatched to the "sync" queue.
          *
          * @param mixed $command
@@ -4031,7 +4031,6 @@ namespace Illuminate\Support\Facades {
          * Assert if a job was pushed exactly once.
          *
          * @param string|\Closure $command
-         * @param int $times
          * @return void
          * @static
          */
@@ -4632,7 +4631,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Retrieve multiple items from the cache by key.
-         * 
+         *
          * Items not found in the cache will have a null value.
          *
          * @param array $keys
@@ -6264,7 +6263,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * @template TReturn of mixed
-         * 
+         *
          * Run the callback function with the given context values and restore the original context state when complete.
          * @param (callable(): TReturn) $callback
          * @param array<string, mixed> $data
@@ -8405,7 +8404,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * @template TReturn of mixed
-         * 
+         *
          * Execute a Closure within a transaction.
          * @param (\Closure(static): TReturn) $callback
          * @param int $attempts
@@ -8836,7 +8835,6 @@ namespace Illuminate\Support\Facades {
          * Assert if an event was dispatched exactly once.
          *
          * @param string $event
-         * @param int $times
          * @return void
          * @static
          */
@@ -9286,7 +9284,7 @@ namespace Illuminate\Support\Facades {
          * Get the file type of a given file.
          *
          * @param string $path
-         * @return string
+         * @return string|false
          * @static
          */
         public static function type($path)
@@ -9544,7 +9542,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Recursively delete a directory.
-         * 
+         *
          * The directory itself may be optionally preserved.
          *
          * @param string $directory
@@ -10379,6 +10377,20 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Http\Client\Factory $instance */
             return $instance->globalOptions($options);
+        }
+
+        /**
+         * Execute a callback while requests are created without global middleware or global options.
+         *
+         * @template TReturn
+         * @param (\Closure(): TReturn) $callback
+         * @return TReturn
+         * @static
+         */
+        public static function withoutGlobalConfiguration($callback)
+        {
+            /** @var \Illuminate\Http\Client\Factory $instance */
+            return $instance->withoutGlobalConfiguration($callback);
         }
 
         /**
@@ -11321,7 +11333,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Action must be taken immediately.
-         * 
+         *
          * Example: Entire website down, database unavailable, etc. This should
          * trigger the SMS alerts and wake you up.
          *
@@ -11338,7 +11350,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Critical conditions.
-         * 
+         *
          * Example: Application component unavailable, unexpected exception.
          *
          * @param string|\Stringable $message
@@ -11369,7 +11381,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Exceptional occurrences that are not errors.
-         * 
+         *
          * Example: Use of deprecated APIs, poor use of an API, undesirable things
          * that are not necessarily wrong.
          *
@@ -11400,7 +11412,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Interesting events.
-         * 
+         *
          * Example: User logs in, SQL logs.
          *
          * @param string|\Stringable $message
@@ -12920,7 +12932,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Indicate that queue workers should not poll for restart or pause signals.
-         * 
+         *
          * This prevents the workers from hitting the application cache to determine if they need to pause or restart.
          *
          * @return void
@@ -13485,6 +13497,89 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
+         * Release a reserved job back onto the queue after (n) seconds.
+         *
+         * @param string $queue
+         * @param \Illuminate\Queue\Jobs\DatabaseJobRecord $job
+         * @param int $delay
+         * @return mixed
+         * @static
+         */
+        public static function release($queue, $job, $delay)
+        {
+            /** @var \Illuminate\Queue\DatabaseQueue $instance */
+            return $instance->release($queue, $job, $delay);
+        }
+
+        /**
+         * Delete a reserved job from the queue.
+         *
+         * @param string $queue
+         * @param string $id
+         * @return void
+         * @throws \Throwable
+         * @static
+         */
+        public static function deleteReserved($queue, $id)
+        {
+            /** @var \Illuminate\Queue\DatabaseQueue $instance */
+            $instance->deleteReserved($queue, $id);
+        }
+
+        /**
+         * Delete a reserved job from the reserved queue and release it.
+         *
+         * @param string $queue
+         * @param \Illuminate\Queue\Jobs\DatabaseJob $job
+         * @param int $delay
+         * @return void
+         * @static
+         */
+        public static function deleteAndRelease($queue, $job, $delay)
+        {
+            /** @var \Illuminate\Queue\DatabaseQueue $instance */
+            $instance->deleteAndRelease($queue, $job, $delay);
+        }
+
+        /**
+         * Delete all of the jobs from the queue.
+         *
+         * @param string $queue
+         * @return int
+         * @static
+         */
+        public static function clear($queue)
+        {
+            /** @var \Illuminate\Queue\DatabaseQueue $instance */
+            return $instance->clear($queue);
+        }
+
+        /**
+         * Get the queue or return the default.
+         *
+         * @param string|null $queue
+         * @return string
+         * @static
+         */
+        public static function getQueue($queue)
+        {
+            /** @var \Illuminate\Queue\DatabaseQueue $instance */
+            return $instance->getQueue($queue);
+        }
+
+        /**
+         * Get the underlying database instance.
+         *
+         * @return \Illuminate\Database\Connection
+         * @static
+         */
+        public static function getDatabase()
+        {
+            /** @var \Illuminate\Queue\DatabaseQueue $instance */
+            return $instance->getDatabase();
+        }
+
+        /**
          * Get the maximum number of attempts for an object-based queue handler.
          *
          * @param mixed $job
@@ -13494,7 +13589,7 @@ namespace Illuminate\Support\Facades {
         public static function getJobTries($job)
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            /** @var \Illuminate\Queue\SyncQueue $instance */
+            /** @var \Illuminate\Queue\DatabaseQueue $instance */
             return $instance->getJobTries($job);
         }
 
@@ -13508,7 +13603,7 @@ namespace Illuminate\Support\Facades {
         public static function getJobBackoff($job)
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            /** @var \Illuminate\Queue\SyncQueue $instance */
+            /** @var \Illuminate\Queue\DatabaseQueue $instance */
             return $instance->getJobBackoff($job);
         }
 
@@ -13522,7 +13617,7 @@ namespace Illuminate\Support\Facades {
         public static function getJobExpiration($job)
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            /** @var \Illuminate\Queue\SyncQueue $instance */
+            /** @var \Illuminate\Queue\DatabaseQueue $instance */
             return $instance->getJobExpiration($job);
         }
 
@@ -13536,7 +13631,7 @@ namespace Illuminate\Support\Facades {
         public static function createPayloadUsing($callback)
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            \Illuminate\Queue\SyncQueue::createPayloadUsing($callback);
+            \Illuminate\Queue\DatabaseQueue::createPayloadUsing($callback);
         }
 
         /**
@@ -13548,7 +13643,7 @@ namespace Illuminate\Support\Facades {
         public static function getConfig()
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            /** @var \Illuminate\Queue\SyncQueue $instance */
+            /** @var \Illuminate\Queue\DatabaseQueue $instance */
             return $instance->getConfig();
         }
 
@@ -13556,13 +13651,13 @@ namespace Illuminate\Support\Facades {
          * Set the queue configuration array.
          *
          * @param array $config
-         * @return \Illuminate\Queue\SyncQueue
+         * @return \Illuminate\Queue\DatabaseQueue
          * @static
          */
         public static function setConfig($config)
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            /** @var \Illuminate\Queue\SyncQueue $instance */
+            /** @var \Illuminate\Queue\DatabaseQueue $instance */
             return $instance->setConfig($config);
         }
 
@@ -13575,7 +13670,7 @@ namespace Illuminate\Support\Facades {
         public static function getContainer()
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            /** @var \Illuminate\Queue\SyncQueue $instance */
+            /** @var \Illuminate\Queue\DatabaseQueue $instance */
             return $instance->getContainer();
         }
 
@@ -13589,7 +13684,7 @@ namespace Illuminate\Support\Facades {
         public static function setContainer($container)
         {
             //Method inherited from \Illuminate\Queue\Queue 
-            /** @var \Illuminate\Queue\SyncQueue $instance */
+            /** @var \Illuminate\Queue\DatabaseQueue $instance */
             $instance->setContainer($container);
         }
 
@@ -13599,7 +13694,7 @@ namespace Illuminate\Support\Facades {
      */
     class RateLimiter {
         /**
-         * Register a named limiter configuration.
+         * Register a named rate limiter configuration.
          *
          * @param \UnitEnum|string $name
          * @param \Closure $callback
@@ -14073,7 +14168,6 @@ namespace Illuminate\Support\Facades {
 
             }
     /**
-     * @method static \BackedEnum|(\BackedEnum|null enum(string $key, string $enumClass, \BackedEnum|null $default = null)
      * @see \Illuminate\Http\Request
      */
     class Request {
@@ -14448,7 +14542,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * This method belongs to Symfony HttpFoundation and is not usually needed when using Laravel.
-         * 
+         *
          * Instead, you may use the "input" method.
          *
          * @param string $key
@@ -14522,7 +14616,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Whether the request contains a Session object.
-         * 
+         *
          * This method does not give any information about the state of the session object,
          * like whether the session is started or not. It is just a way to check if this Request
          * is associated with a Session instance.
@@ -14843,6 +14937,18 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
+         * Determine if the current request is asking for Markdown.
+         *
+         * @return bool
+         * @static
+         */
+        public static function wantsMarkdown()
+        {
+            /** @var \Illuminate\Http\Request $instance */
+            return $instance->wantsMarkdown();
+        }
+
+        /**
          * Determines whether the current requests accepts a given content type.
          *
          * @param string|array $contentTypes
@@ -14890,6 +14996,18 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Http\Request $instance */
             return $instance->acceptsJson();
+        }
+
+        /**
+         * Determines whether a request accepts Markdown.
+         *
+         * @return bool
+         * @static
+         */
+        public static function acceptsMarkdown()
+        {
+            /** @var \Illuminate\Http\Request $instance */
+            return $instance->acceptsMarkdown();
         }
 
         /**
@@ -15386,7 +15504,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Retrieve data as a boolean value.
-         * 
+         *
          * Returns true when value is "1", "true", "on", and "yes". Otherwise, returns false.
          *
          * @param string|null $key
@@ -15458,6 +15576,20 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Http\Request $instance */
             return $instance->date($key, $format, $tz);
+        }
+
+        /**
+         * Retrieve data from the instance as a CarbonInterval instance.
+         *
+         * @param string $key
+         * @param \Carbon\Unit|string|null $unit
+         * @return \Carbon\CarbonInterval|null
+         * @static
+         */
+        public static function interval($key, $unit = null)
+        {
+            /** @var \Illuminate\Http\Request $instance */
+            return $instance->interval($key, $unit);
         }
 
         /**
@@ -15631,7 +15763,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Sets the parameters for this request.
-         * 
+         *
          * This method also re-initializes all properties.
          *
          * @param array $query The GET parameters
@@ -15663,7 +15795,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Creates a Request based on a given URI and configuration.
-         * 
+         *
          * The information contained in the URI always take precedence
          * over the other information (server and parameters).
          *
@@ -15685,7 +15817,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Sets a callable able to create a Request instance.
-         * 
+         *
          * This is mainly useful when you need to override the Request class
          * to keep BC with an existing system. It should not be used for any
          * other purpose.
@@ -15700,7 +15832,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Overrides the PHP global variables according to this request instance.
-         * 
+         *
          * It overrides $_GET, $_POST, $_REQUEST, $_SERVER, $_COOKIE.
          * $_FILES is never overridden, see rfc1867
          *
@@ -15715,7 +15847,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Sets a list of trusted proxies.
-         * 
+         *
          * You should only list the reverse proxies that you manage directly.
          *
          * @param array $proxies A list of trusted proxies, the string 'REMOTE_ADDR' will be replaced with $_SERVER['REMOTE_ADDR'] and 'PRIVATE_SUBNETS' by IpUtils::PRIVATE_SUBNETS
@@ -15754,7 +15886,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Sets a list of trusted host patterns.
-         * 
+         *
          * You should only list the hosts you manage using regexs.
          *
          * @param array $hostPatterns A list of trusted host patterns
@@ -15780,7 +15912,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Normalizes a query string.
-         * 
+         *
          * It builds a normalized query string, where keys/value pairs are alphabetized,
          * have consistent escaping and unneeded delimiters are removed.
          *
@@ -15794,13 +15926,13 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Enables support for the _method request parameter to determine the intended HTTP method.
-         * 
+         *
          * Be warned that enabling this feature might lead to CSRF issues in your code.
          * Check that you are using CSRF tokens when required.
          * If the HTTP method parameter override is enabled, an html-form with method "POST" can be altered
          * and used to send a "PUT" or "DELETE" request via the _method request parameter.
          * If these methods are not protected against CSRF, this presents a possible vulnerability.
-         * 
+         *
          * The HTTP method can only be overridden when the real HTTP method is POST.
          *
          * @static
@@ -15824,7 +15956,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Sets the list of HTTP methods that can be overridden.
-         * 
+         *
          * Set to null to allow all methods to be overridden (default). Set to an
          * empty array to disallow overrides entirely. Otherwise, provide the list
          * of uppercased method names that are allowed.
@@ -15887,11 +16019,11 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns the client IP addresses.
-         * 
+         *
          * In the returned array the most trusted IP address is first, and the
          * least trusted one last. The "real" client IP address is the last one,
          * but this is also the least trusted one. Trusted proxies are stripped.
-         * 
+         *
          * Use this method carefully; you should use getClientIp() instead.
          *
          * @see getClientIp()
@@ -15906,16 +16038,12 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns the client IP address.
-         * 
+         *
          * This method can read the client IP address from the "X-Forwarded-For" header
          * when trusted proxies were set via "setTrustedProxies()". The "X-Forwarded-For"
          * header value is a comma+space separated list of IP addresses, the left-most
          * being the original client, and each successive proxy that passed the request
          * adding the IP address where it received the request from.
-         * 
-         * If your reverse proxy uses a different header name than "X-Forwarded-For",
-         * ("Client-Ip" for instance), configure it via the $trustedHeaderSet
-         * argument of the Request::setTrustedProxies() method instead.
          *
          * @see getClientIps()
          * @see https://wikipedia.org/wiki/X-Forwarded-For
@@ -15942,11 +16070,11 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns the path being requested relative to the executed script.
-         * 
+         *
          * The path info always starts with a /.
-         * 
+         *
          * Suppose this request is instantiated from /mysite on localhost:
-         * 
+         *
          *  * http://localhost/mysite              returns '/'
          *  * http://localhost/mysite/about        returns '/about'
          *  * http://localhost/mysite/enco%20ded   returns '/enco%20ded'
@@ -15964,9 +16092,9 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns the root path from which this request is executed.
-         * 
+         *
          * Suppose that an index.php file instantiates this request object:
-         * 
+         *
          *  * http://localhost/index.php         returns an empty string
          *  * http://localhost/index.php/page    returns an empty string
          *  * http://localhost/web/index.php     returns '/web'
@@ -15984,9 +16112,9 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns the root URL from which this request is executed.
-         * 
+         *
          * The base URL never ends with a /.
-         * 
+         *
          * This is similar to getBasePath(), except that it also includes the
          * script filename (e.g. index.php) if one exists.
          *
@@ -16014,10 +16142,10 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns the port on which the request is made.
-         * 
+         *
          * This method can read the client port from the "X-Forwarded-Port" header
          * when trusted proxies were set via "setTrustedProxies()".
-         * 
+         *
          * The "X-Forwarded-Port" header must contain the client port.
          *
          * @return int|string|null Can be a string if fetched from the server bag
@@ -16069,7 +16197,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns the HTTP host being requested.
-         * 
+         *
          * The port name will be appended to the host if it's non-standard.
          *
          * @static
@@ -16096,7 +16224,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Gets the scheme and HTTP host.
-         * 
+         *
          * If the URL was called with basic authentication, the user
          * and the password are not added to the generated string.
          *
@@ -16137,12 +16265,12 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns the path as relative reference from the current Request path.
-         * 
+         *
          * Only the URIs path component (no schema, host etc.) is relevant and must be given.
          * Both paths must be absolute and not contain relative parts.
          * Relative URLs from one resource to another are useful when generating self-contained downloadable document archives.
          * Furthermore, they can be used to reduce the link size in documents.
-         * 
+         *
          * Example target paths, given a base path of "/a/b/c/d":
          * - "/a/b/c/d"     -> ""
          * - "/a/b/c/"      -> "./"
@@ -16161,7 +16289,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Generates the normalized query string for the Request.
-         * 
+         *
          * It builds a normalized query string, where keys/value pairs are alphabetized
          * and have consistent escaping.
          *
@@ -16176,10 +16304,10 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Checks whether the request is secure or not.
-         * 
+         *
          * This method can read the client protocol from the "X-Forwarded-Proto" header
          * when trusted proxies were set via "setTrustedProxies()".
-         * 
+         *
          * The "X-Forwarded-Proto" header must contain the protocol: "https" or "http".
          *
          * @static
@@ -16193,10 +16321,10 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns the host name.
-         * 
+         *
          * This method can read the client host name from the "X-Forwarded-Host" header
          * when trusted proxies were set via "setTrustedProxies()".
-         * 
+         *
          * The "X-Forwarded-Host" header must contain the client host name.
          *
          * @throws SuspiciousOperationException when the host name is invalid or not trusted
@@ -16223,13 +16351,13 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Gets the request "intended" method.
-         * 
+         *
          * If the X-HTTP-Method-Override header is set, and if the method is a POST,
          * then it is used to determine the "real" intended HTTP method.
-         * 
+         *
          * The _method request parameter can also be used to determine the HTTP method,
          * but only if enableHttpMethodParameterOverride() has been called.
-         * 
+         *
          * The method is always an uppercased string.
          *
          * @see getRealMethod()
@@ -16281,7 +16409,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Gets the format associated with the mime type.
-         * 
+         *
          * Resolution order:
          *   1) Exact match on the full MIME type (e.g. "application/json").
          *   2) Match on the canonical MIME type (i.e. before the first ";" parameter).
@@ -16318,9 +16446,9 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Gets the request format.
-         * 
+         *
          * Here is the process to determine the format:
-         * 
+         *
          *  * format defined by the user (with setRequestFormat())
          *  * _format request attribute
          *  * $default
@@ -16461,7 +16589,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns the protocol version.
-         * 
+         *
          * If the application is behind a proxy, the protocol version used in the
          * requests between the client and the proxy and between the proxy and the
          * server might be different. This returns the former (from the "Via" header)
@@ -16531,7 +16659,7 @@ namespace Illuminate\Support\Facades {
          * Gets the preferred format for the response by inspecting, in the following order:
          *   * the request format set using setRequestFormat;
          *   * the values of the Accept HTTP header.
-         * 
+         *
          * Note that if you use this method, you should send the "Vary: Accept" header
          * in the response to prevent any issues with intermediary HTTP caches.
          *
@@ -16598,7 +16726,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Returns true if the request is an XMLHttpRequest.
-         * 
+         *
          * It works if your JavaScript library sets an X-Requested-With HTTP header.
          * It is known to work with common JavaScript frameworks:
          *
@@ -16627,7 +16755,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Indicates whether this request originated from a trusted proxy.
-         * 
+         *
          * This can be useful to determine whether or not to trust the
          * contents of a proxy-specific header.
          *
@@ -17623,7 +17751,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Add a middleware to the beginning of a middleware group.
-         * 
+         *
          * If the middleware is already in the group, it will not be added again.
          *
          * @param string $group
@@ -17639,7 +17767,7 @@ namespace Illuminate\Support\Facades {
 
         /**
          * Add a middleware to the end of a middleware group.
-         * 
+         *
          * If the middleware is already in the group, it will not be added again.
          *
          * @param string $group
@@ -18254,7 +18382,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Create new schedule group.
          *
-         * @param \Illuminate\Console\Scheduling\Event $event
+         * @param \Closure $events
          * @return void
          * @throws \RuntimeException
          * @static
@@ -20539,6 +20667,7 @@ namespace Illuminate\Support\Facades {
          * @param array $headers
          * @param string|null $disposition
          * @return \Symfony\Component\HttpFoundation\StreamedResponse
+         * @throws UnableToRetrieveMetadata
          * @static
          */
         public static function response($path, $name = null, $headers = [], $disposition = 'inline')
@@ -20556,6 +20685,7 @@ namespace Illuminate\Support\Facades {
          * @param string|null $name
          * @param array $headers
          * @return \Symfony\Component\HttpFoundation\StreamedResponse
+         * @throws UnableToRetrieveMetadata
          * @static
          */
         public static function serve($request, $path, $name = null, $headers = [])
@@ -20572,6 +20702,7 @@ namespace Illuminate\Support\Facades {
          * @param string|null $name
          * @param array $headers
          * @return \Symfony\Component\HttpFoundation\StreamedResponse
+         * @throws UnableToRetrieveMetadata
          * @static
          */
         public static function download($path, $name = null, $headers = [])
@@ -20770,6 +20901,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $path
          * @return string|false
+         * @throws UnableToRetrieveMetadata
          * @static
          */
         public static function mimeType($path)
@@ -23418,6 +23550,24 @@ namespace BezhanSalleh\FilamentShield\Facades {
         /**
          * @static
          */
+        public static function enforcePolicies($condition = true, $except = null)
+        {
+            /** @var \BezhanSalleh\FilamentShield\FilamentShield $instance */
+            return $instance->enforcePolicies($condition, $except);
+        }
+
+        /**
+         * @static
+         */
+        public static function registerEnforcedPolicies()
+        {
+            /** @var \BezhanSalleh\FilamentShield\FilamentShield $instance */
+            return $instance->registerEnforcedPolicies();
+        }
+
+        /**
+         * @static
+         */
         public static function getResources()
         {
             /** @var \BezhanSalleh\FilamentShield\FilamentShield $instance */
@@ -23551,6 +23701,19 @@ namespace BezhanSalleh\FilamentShield\Facades {
         }
 
         /**
+         * Transform custom permissions from config into formatted key => label pairs.
+         *
+         * When `format_custom_permission_keys` is enabled (default), permission keys are
+         * formatted according to the configured case. If the key contains the configured
+         * separator, each segment is formatted independently and rejoined.
+         *
+         * When a `buildPermissionKeyUsing` closure is registered, custom permissions are
+         * routed through it with `entity` set to `'custom'` and `affix` set to `null`.
+         * Returning `null` from the closure falls back to the default formatting behavior.
+         *
+         * When `format_custom_permission_keys` is disabled, keys are used exactly as
+         * defined in config — useful for externally managed permissions (Terraform, Keycloak, etc.).
+         *
          * @return array<string, string>
          * @static
          */
@@ -23595,11 +23758,11 @@ namespace BezhanSalleh\FilamentShield\Facades {
 
         /**
          * TODO: Just not to get confused later, document steps and remove later if unnecessary.
-         * 
+         *
          * Get localized label for a permission key.
-         * 
+         *
          * Used for: resource affixes, page/widget permissions, custom permissions.
-         * 
+         *
          * Fallback chain:
          * 1. User's translation file (if localization.enabled)
          * 2. Package's resource_permission_prefixes_labels (for affixes only)
@@ -23637,7 +23800,7 @@ namespace BezhanSalleh\FilamentShield\Facades {
 
         /**
          * Get label for a page/widget permission.
-         * 
+         *
          * When localization is enabled, checks user's translation file.
          * Otherwise, uses Filament's entity methods.
          *
@@ -23651,7 +23814,7 @@ namespace BezhanSalleh\FilamentShield\Facades {
 
         /**
          * Get label for a custom permission.
-         * 
+         *
          * When localization is enabled, checks user's translation file.
          * Otherwise, uses the provided label or headlines the key.
          *
@@ -23738,7 +23901,7 @@ namespace Fruitcake\LaravelDebugbar\Facades {
      * @method static void            warning(mixed $message)
      * @see \Fruitcake\LaravelDebugbar\LaravelDebugbar
      */
-    class Debugbar extends \DebugBar\DebugBar {
+    class Debugbar {
         /**
          * @static
          */
@@ -23947,6 +24110,14 @@ namespace Fruitcake\LaravelDebugbar\Facades {
         }
 
         /**
+         * @static
+         */
+        public static function canBeEnabled()
+        {
+            return \Fruitcake\LaravelDebugbar\LaravelDebugbar::canBeEnabled();
+        }
+
+        /**
          * Check if the Debugbar is enabled
          *
          * @static
@@ -23955,6 +24126,15 @@ namespace Fruitcake\LaravelDebugbar\Facades {
         {
             /** @var \Fruitcake\LaravelDebugbar\LaravelDebugbar $instance */
             return $instance->isEnabled();
+        }
+
+        /**
+         * @static
+         */
+        public static function isStorageOpen($request)
+        {
+            /** @var \Fruitcake\LaravelDebugbar\LaravelDebugbar $instance */
+            return $instance->isStorageOpen($request);
         }
 
         /**
@@ -23988,7 +24168,7 @@ namespace Fruitcake\LaravelDebugbar\Facades {
 
         /**
          * Injects the web debug toolbar into the given Response.
-         * 
+         *
          * Based on https://github.com/symfony/WebProfilerBundle/blob/master/EventListener/WebDebugToolbarListener.php
          *
          * @static
@@ -24043,7 +24223,7 @@ namespace Fruitcake\LaravelDebugbar\Facades {
 
         /**
          * Adds a message to the MessagesCollector
-         * 
+         *
          * A message can be anything from an object to a string
          *
          * @static
@@ -24213,7 +24393,7 @@ namespace Fruitcake\LaravelDebugbar\Facades {
 
         /**
          * Returns collected data
-         * 
+         *
          * Will collect the data if none have been collected yet
          *
          * @static
@@ -24446,582 +24626,157 @@ namespace Jeffgreco13\FilamentBreezy\Facades {
             }
     }
 
-namespace Jenssegers\Agent\Facades {
+namespace Laravel\Mcp\Facades {
     /**
+     * @see Registrar
      */
-    class Agent extends \Mobile_Detect {
+    class Mcp {
         /**
-         * Get all detection rules. These rules include the additional
-         * platforms and browsers and utilities.
+         * @param class-string<Server> $serverClass
+         * @static
+         */
+        public static function web($route, $serverClass)
+        {
+            /** @var \Laravel\Mcp\Server\Registrar $instance */
+            return $instance->web($route, $serverClass);
+        }
+
+        /**
+         * @param class-string<Server> $serverClass
+         * @static
+         */
+        public static function local($handle, $serverClass)
+        {
+            /** @var \Laravel\Mcp\Server\Registrar $instance */
+            return $instance->local($handle, $serverClass);
+        }
+
+        /**
+         * @param \Closure():  Client  $factory
+         * @static
+         */
+        public static function registerClient($name, $factory)
+        {
+            /** @var \Laravel\Mcp\Server\Registrar $instance */
+            return $instance->registerClient($name, $factory);
+        }
+
+        /**
+         * @static
+         */
+        public static function client($name)
+        {
+            /** @var \Laravel\Mcp\Server\Registrar $instance */
+            return $instance->client($name);
+        }
+
+        /**
+         * @param \Closure(string, TokenSet):  mixed|array{0: class-string, 1: string}  $handler
+         * @param array<int, string>|string $middleware
+         * @param array<string, mixed> $clientMetadata
+         * @static
+         */
+        public static function oAuthRoutesFor($client, $handler, $middleware = 'web', $connectUri = null, $callbackUri = null, $clientMetadataUri = null, $clientMetadata = [])
+        {
+            /** @var \Laravel\Mcp\Server\Registrar $instance */
+            return $instance->oAuthRoutesFor($client, $handler, $middleware, $connectUri, $callbackUri, $clientMetadataUri, $clientMetadata);
+        }
+
+        /**
+         * @static
+         */
+        public static function getLocalServer($handle)
+        {
+            /** @var \Laravel\Mcp\Server\Registrar $instance */
+            return $instance->getLocalServer($handle);
+        }
+
+        /**
+         * @static
+         */
+        public static function getWebServer($route)
+        {
+            /** @var \Laravel\Mcp\Server\Registrar $instance */
+            return $instance->getWebServer($route);
+        }
+
+        /**
+         * @return array<string, callable|Route>
+         * @static
+         */
+        public static function servers()
+        {
+            /** @var \Laravel\Mcp\Server\Registrar $instance */
+            return $instance->servers();
+        }
+
+        /**
+         * @static
+         */
+        public static function oauthRoutes($oauthPrefix = 'oauth')
+        {
+            /** @var \Laravel\Mcp\Server\Registrar $instance */
+            return $instance->oauthRoutes($oauthPrefix);
+        }
+
+        /**
+         * @return array<string, string>
+         * @static
+         */
+        public static function ensureMcpScope()
+        {
+            return \Laravel\Mcp\Server\Registrar::ensureMcpScope();
+        }
+
+        /**
+         * Register a custom macro.
          *
-         * @return array
+         * @param string $name
+         * @param object|callable $macro
+         * @param-closure-this static  $macro
+         * @return void
          * @static
          */
-        public static function getDetectionRulesExtended()
+        public static function macro($name, $macro)
         {
-            return \Jenssegers\Agent\Agent::getDetectionRulesExtended();
+            \Laravel\Mcp\Server\Registrar::macro($name, $macro);
         }
 
         /**
-         * @static
-         */
-        public static function getRules()
-        {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getRules();
-        }
-
-        /**
-         * @return \Jaybizzle\CrawlerDetect\CrawlerDetect
-         * @static
-         */
-        public static function getCrawlerDetect()
-        {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getCrawlerDetect();
-        }
-
-        /**
-         * @static
-         */
-        public static function getBrowsers()
-        {
-            return \Jenssegers\Agent\Agent::getBrowsers();
-        }
-
-        /**
-         * @static
-         */
-        public static function getOperatingSystems()
-        {
-            return \Jenssegers\Agent\Agent::getOperatingSystems();
-        }
-
-        /**
-         * @static
-         */
-        public static function getPlatforms()
-        {
-            return \Jenssegers\Agent\Agent::getPlatforms();
-        }
-
-        /**
-         * @static
-         */
-        public static function getDesktopDevices()
-        {
-            return \Jenssegers\Agent\Agent::getDesktopDevices();
-        }
-
-        /**
-         * @static
-         */
-        public static function getProperties()
-        {
-            return \Jenssegers\Agent\Agent::getProperties();
-        }
-
-        /**
-         * Get accept languages.
+         * Mix another object into the class.
          *
-         * @param string $acceptLanguage
-         * @return array
+         * @param object $mixin
+         * @param bool $replace
+         * @return void
+         * @throws \ReflectionException
          * @static
          */
-        public static function languages($acceptLanguage = null)
+        public static function mixin($mixin, $replace = true)
         {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->languages($acceptLanguage);
+            \Laravel\Mcp\Server\Registrar::mixin($mixin, $replace);
         }
 
         /**
-         * Get the browser name.
+         * Checks if macro is registered.
          *
-         * @param string|null $userAgent
-         * @return string|bool
-         * @static
-         */
-        public static function browser($userAgent = null)
-        {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->browser($userAgent);
-        }
-
-        /**
-         * Get the platform name.
-         *
-         * @param string|null $userAgent
-         * @return string|bool
-         * @static
-         */
-        public static function platform($userAgent = null)
-        {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->platform($userAgent);
-        }
-
-        /**
-         * Get the device name.
-         *
-         * @param string|null $userAgent
-         * @return string|bool
-         * @static
-         */
-        public static function device($userAgent = null)
-        {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->device($userAgent);
-        }
-
-        /**
-         * Check if the device is a desktop computer.
-         *
-         * @param string|null $userAgent deprecated
-         * @param array $httpHeaders deprecated
+         * @param string $name
          * @return bool
          * @static
          */
-        public static function isDesktop($userAgent = null, $httpHeaders = null)
+        public static function hasMacro($name)
         {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->isDesktop($userAgent, $httpHeaders);
+            return \Laravel\Mcp\Server\Registrar::hasMacro($name);
         }
 
         /**
-         * Check if the device is a mobile phone.
+         * Flush the existing macros.
          *
-         * @param string|null $userAgent deprecated
-         * @param array $httpHeaders deprecated
-         * @return bool
+         * @return void
          * @static
          */
-        public static function isPhone($userAgent = null, $httpHeaders = null)
+        public static function flushMacros()
         {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->isPhone($userAgent, $httpHeaders);
-        }
-
-        /**
-         * Get the robot name.
-         *
-         * @param string|null $userAgent
-         * @return string|bool
-         * @static
-         */
-        public static function robot($userAgent = null)
-        {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->robot($userAgent);
-        }
-
-        /**
-         * Check if device is a robot.
-         *
-         * @param string|null $userAgent
-         * @return bool
-         * @static
-         */
-        public static function isRobot($userAgent = null)
-        {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->isRobot($userAgent);
-        }
-
-        /**
-         * Get the device type
-         *
-         * @param null $userAgent
-         * @param null $httpHeaders
-         * @return string
-         * @static
-         */
-        public static function deviceType($userAgent = null, $httpHeaders = null)
-        {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->deviceType($userAgent, $httpHeaders);
-        }
-
-        /**
-         * @static
-         */
-        public static function version($propertyName, $type = 'text')
-        {
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->version($propertyName, $type);
-        }
-
-        /**
-         * Get the current script version.
-         * 
-         * This is useful for the demo.php file,
-         * so people can check on what version they are testing
-         * for mobile devices.
-         *
-         * @return string The version number in semantic version format.
-         * @static
-         */
-        public static function getScriptVersion()
-        {
-            //Method inherited from \Mobile_Detect 
-            return \Jenssegers\Agent\Agent::getScriptVersion();
-        }
-
-        /**
-         * Set the HTTP Headers. Must be PHP-flavored. This method will reset existing headers.
-         *
-         * @param array $httpHeaders The headers to set. If null, then using PHP's _SERVER to extract
-         *                           the headers. The default null is left for backwards compatibility.
-         * @static
-         */
-        public static function setHttpHeaders($httpHeaders = null)
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->setHttpHeaders($httpHeaders);
-        }
-
-        /**
-         * Retrieves the HTTP headers.
-         *
-         * @return array
-         * @static
-         */
-        public static function getHttpHeaders()
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getHttpHeaders();
-        }
-
-        /**
-         * Retrieves a particular header. If it doesn't exist, no exception/error is caused.
-         * 
-         * Simply null is returned.
-         *
-         * @param string $header The name of the header to retrieve. Can be HTTP compliant such as
-         *                       "User-Agent" or "X-Device-User-Agent" or can be php-esque with the
-         *                       all-caps, HTTP_ prefixed, underscore separated awesomeness.
-         * @return string|null The value of the header.
-         * @static
-         */
-        public static function getHttpHeader($header)
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getHttpHeader($header);
-        }
-
-        /**
-         * @static
-         */
-        public static function getMobileHeaders()
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getMobileHeaders();
-        }
-
-        /**
-         * Get all possible HTTP headers that
-         * can contain the User-Agent string.
-         *
-         * @return array List of HTTP headers.
-         * @static
-         */
-        public static function getUaHttpHeaders()
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getUaHttpHeaders();
-        }
-
-        /**
-         * Set CloudFront headers
-         * http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/header-caching.html#header-caching-web-device
-         *
-         * @param array $cfHeaders List of HTTP headers
-         * @return boolean If there were CloudFront headers to be set
-         * @static
-         */
-        public static function setCfHeaders($cfHeaders = null)
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->setCfHeaders($cfHeaders);
-        }
-
-        /**
-         * Retrieves the cloudfront headers.
-         *
-         * @return array
-         * @static
-         */
-        public static function getCfHeaders()
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getCfHeaders();
-        }
-
-        /**
-         * Set the User-Agent to be used.
-         *
-         * @param string $userAgent The user agent string to set.
-         * @return string|null
-         * @static
-         */
-        public static function setUserAgent($userAgent = null)
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->setUserAgent($userAgent);
-        }
-
-        /**
-         * Retrieve the User-Agent.
-         *
-         * @return string|null The user agent if it's set.
-         * @static
-         */
-        public static function getUserAgent()
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getUserAgent();
-        }
-
-        /**
-         * Set the detection type. Must be one of self::DETECTION_TYPE_MOBILE or
-         * self::DETECTION_TYPE_EXTENDED. Otherwise, nothing is set.
-         *
-         * @deprecated since version 2.6.9
-         * @param string $type The type. Must be a self::DETECTION_TYPE_* constant. The default
-         *                     parameter is null which will default to self::DETECTION_TYPE_MOBILE.
-         * @static
-         */
-        public static function setDetectionType($type = null)
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->setDetectionType($type);
-        }
-
-        /**
-         * @static
-         */
-        public static function getMatchingRegex()
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getMatchingRegex();
-        }
-
-        /**
-         * @static
-         */
-        public static function getMatchesArray()
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getMatchesArray();
-        }
-
-        /**
-         * Retrieve the list of known phone devices.
-         *
-         * @return array List of phone devices.
-         * @static
-         */
-        public static function getPhoneDevices()
-        {
-            //Method inherited from \Mobile_Detect 
-            return \Jenssegers\Agent\Agent::getPhoneDevices();
-        }
-
-        /**
-         * Retrieve the list of known tablet devices.
-         *
-         * @return array List of tablet devices.
-         * @static
-         */
-        public static function getTabletDevices()
-        {
-            //Method inherited from \Mobile_Detect 
-            return \Jenssegers\Agent\Agent::getTabletDevices();
-        }
-
-        /**
-         * Alias for getBrowsers() method.
-         *
-         * @return array List of user agents.
-         * @static
-         */
-        public static function getUserAgents()
-        {
-            //Method inherited from \Mobile_Detect 
-            return \Jenssegers\Agent\Agent::getUserAgents();
-        }
-
-        /**
-         * Retrieve the list of known utilities.
-         *
-         * @return array List of utilities.
-         * @static
-         */
-        public static function getUtilities()
-        {
-            //Method inherited from \Mobile_Detect 
-            return \Jenssegers\Agent\Agent::getUtilities();
-        }
-
-        /**
-         * Method gets the mobile detection rules. This method is used for the magic methods $detect->is*().
-         *
-         * @deprecated since version 2.6.9
-         * @return array All the rules (but not extended).
-         * @static
-         */
-        public static function getMobileDetectionRules()
-        {
-            //Method inherited from \Mobile_Detect 
-            return \Jenssegers\Agent\Agent::getMobileDetectionRules();
-        }
-
-        /**
-         * Method gets the mobile detection rules + utilities.
-         * 
-         * The reason this is separate is because utilities rules
-         * don't necessary imply mobile. This method is used inside
-         * the new $detect->is('stuff') method.
-         *
-         * @deprecated since version 2.6.9
-         * @return array All the rules + extended.
-         * @static
-         */
-        public static function getMobileDetectionRulesExtended()
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->getMobileDetectionRulesExtended();
-        }
-
-        /**
-         * Check the HTTP headers for signs of mobile.
-         * 
-         * This is the fastest mobile check possible; it's used
-         * inside isMobile() method.
-         *
-         * @return bool
-         * @static
-         */
-        public static function checkHttpHeadersForMobile()
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->checkHttpHeadersForMobile();
-        }
-
-        /**
-         * Check if the device is mobile.
-         * 
-         * Returns true if any type of mobile device detected, including special ones
-         *
-         * @param null $userAgent deprecated
-         * @param null $httpHeaders deprecated
-         * @return bool
-         * @static
-         */
-        public static function isMobile($userAgent = null, $httpHeaders = null)
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->isMobile($userAgent, $httpHeaders);
-        }
-
-        /**
-         * Check if the device is a tablet.
-         * 
-         * Return true if any type of tablet device is detected.
-         *
-         * @param string $userAgent deprecated
-         * @param array $httpHeaders deprecated
-         * @return bool
-         * @static
-         */
-        public static function isTablet($userAgent = null, $httpHeaders = null)
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->isTablet($userAgent, $httpHeaders);
-        }
-
-        /**
-         * This method checks for a certain property in the
-         * userAgent.
-         *
-         * @todo : The httpHeaders part is not yet used.
-         * @param string $key
-         * @param string $userAgent deprecated
-         * @param string $httpHeaders deprecated
-         * @return bool|int|null
-         * @static
-         */
-        public static function is($key, $userAgent = null, $httpHeaders = null)
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->is($key, $userAgent, $httpHeaders);
-        }
-
-        /**
-         * Some detection rules are relative (not standard),
-         * because of the diversity of devices, vendors and
-         * their conventions in representing the User-Agent or
-         * the HTTP headers.
-         * 
-         * This method will be used to check custom regexes against
-         * the User-Agent string.
-         *
-         * @param $regex
-         * @param string $userAgent
-         * @return bool
-         * @todo : search in the HTTP headers too.
-         * @static
-         */
-        public static function match($regex, $userAgent = null)
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->match($regex, $userAgent);
-        }
-
-        /**
-         * Prepare the version number.
-         *
-         * @todo Remove the error supression from str_replace() call.
-         * @param string $ver The string version, like "2.6.21.2152";
-         * @return float
-         * @static
-         */
-        public static function prepareVersionNo($ver)
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->prepareVersionNo($ver);
-        }
-
-        /**
-         * Retrieve the mobile grading, using self::MOBILE_GRADE_* constants.
-         *
-         * @deprecated This is no longer being maintained, it was an experiment at the time.
-         * @return string One of the self::MOBILE_GRADE_* constants.
-         * @static
-         */
-        public static function mobileGrade()
-        {
-            //Method inherited from \Mobile_Detect 
-            /** @var \Jenssegers\Agent\Agent $instance */
-            return $instance->mobileGrade();
+            \Laravel\Mcp\Server\Registrar::flushMacros();
         }
 
             }
@@ -25071,6 +24826,15 @@ namespace Flux {
         /**
          * @static
          */
+        public static function nonce()
+        {
+            /** @var \Flux\FluxManager $instance */
+            return $instance->nonce();
+        }
+
+        /**
+         * @static
+         */
         public static function scripts($options = [])
         {
             /** @var \Flux\FluxManager $instance */
@@ -25102,6 +24866,24 @@ namespace Flux {
         {
             /** @var \Flux\FluxManager $instance */
             return $instance->editorScripts();
+        }
+
+        /**
+         * @static
+         */
+        public static function phoneScripts()
+        {
+            /** @var \Flux\FluxManager $instance */
+            return $instance->phoneScripts();
+        }
+
+        /**
+         * @static
+         */
+        public static function flagUrl($country)
+        {
+            /** @var \Flux\FluxManager $instance */
+            return $instance->flagUrl($country);
         }
 
         /**
@@ -25215,10 +24997,10 @@ namespace Flux {
         /**
          * @static
          */
-        public static function toast($text, $heading = null, $duration = 5000, $variant = null, $position = null)
+        public static function toast($text, $heading = null, $duration = 5000, $variant = null, $position = null, $link = null, $action = null)
         {
             /** @var \Flux\FluxManager $instance */
-            return $instance->toast($text, $heading, $duration, $variant, $position);
+            return $instance->toast($text, $heading, $duration, $variant, $position, $link, $action);
         }
 
             }
@@ -25734,6 +25516,29 @@ namespace Illuminate\Support {
             return \Illuminate\Support\Str::sanitizeHtml($html);
         }
 
+        /**
+         * @see \Filament\Support\SupportServiceProvider::packageBooted()
+         * @param string|null $url
+         * @param array $allowedSchemes
+         * @return string|null
+         * @static
+         */
+        public static function sanitizeUrl($url, $allowedSchemes = [])
+        {
+            return \Illuminate\Support\Str::sanitizeUrl($url, $allowedSchemes);
+        }
+
+        /**
+         * @see \Filament\Support\SupportServiceProvider::packageBooted()
+         * @param \BackedEnum|string|null $color
+         * @return string|null
+         * @static
+         */
+        public static function sanitizeCssColor($color)
+        {
+            return \Illuminate\Support\Str::sanitizeCssColor($color);
+        }
+
             }
     /**
      */
@@ -25746,6 +25551,27 @@ namespace Illuminate\Support {
         public static function sanitizeHtml()
         {
             return \Illuminate\Support\Stringable::sanitizeHtml();
+        }
+
+        /**
+         * @see \Filament\Support\SupportServiceProvider::packageBooted()
+         * @param array $allowedSchemes
+         * @return \Illuminate\Support\Stringable
+         * @static
+         */
+        public static function sanitizeUrl($allowedSchemes = [])
+        {
+            return \Illuminate\Support\Stringable::sanitizeUrl($allowedSchemes);
+        }
+
+        /**
+         * @see \Filament\Support\SupportServiceProvider::packageBooted()
+         * @return \Illuminate\Support\Stringable
+         * @static
+         */
+        public static function sanitizeCssColor()
+        {
+            return \Illuminate\Support\Stringable::sanitizeCssColor();
         }
 
             }
@@ -26174,6 +26000,9 @@ namespace Illuminate\Database\Eloquent\Relations {
 namespace Livewire\Features\SupportTesting {
     /**
      * @template TComponent of \Livewire\Component
+     * @method $this assertSuccessful()
+     * @method $this assertOk()
+     * @method $this assertStatus(int $status)
      * @mixin \Illuminate\Testing\TestResponse
      */
     class Testable {
@@ -26191,12 +26020,13 @@ namespace Livewire\Features\SupportTesting {
 
         /**
          * @see \Filament\Actions\Testing\TestsActions::unmountAction()
+         * @param string|bool|null $cancelParentActions
          * @return static
          * @static
          */
-        public static function unmountAction()
+        public static function unmountAction($cancelParentActions = null)
         {
-            return \Livewire\Features\SupportTesting\Testable::unmountAction();
+            return \Livewire\Features\SupportTesting\Testable::unmountAction($cancelParentActions);
         }
 
         /**
@@ -28835,18 +28665,14 @@ namespace Livewire\Features\SupportTesting {
             }
     }
 
-namespace App\Filament\Resources\Users\Pages {
+namespace App\Filament\Resources\AuthenticationLogs\Pages {
     /**
      */
-    class ManageUsers extends \Filament\Resources\Pages\ManageRecords {
+    class ManageAuthenticationLogs extends \Filament\Resources\Pages\ListRecords {
             }
     }
 
 namespace Filament\Resources\Pages {
-    /**
-     */
-    class ManageRecords extends \Filament\Resources\Pages\ListRecords {
-            }
     /**
      */
     class ListRecords extends \Filament\Resources\Pages\Page {
@@ -28856,6 +28682,11 @@ namespace Filament\Resources\Pages {
     class Page extends \Filament\Pages\Page {
             }
     /**
+     */
+    class ManageRecords extends \Filament\Resources\Pages\ListRecords {
+            }
+    /**
+     * @template TModel of Model = Model
      * @property-read Schema $form
      */
     class CreateRecord extends \Filament\Resources\Pages\Page {
@@ -28885,6 +28716,11 @@ namespace Filament\Pages {
     class BasePage extends \Livewire\Component {
             }
     /**
+     * @property-read Schema $form
+     */
+    class SettingsPage extends \Filament\Pages\Page {
+            }
+    /**
      */
     class Dashboard extends \Filament\Pages\Page {
             }
@@ -28894,10 +28730,17 @@ namespace Filament\Pages {
             }
     }
 
-namespace App\Filament\Widgets {
+namespace App\Filament\Resources\Users\Pages {
     /**
      */
-    class StatsOverview extends \Filament\Widgets\StatsOverviewWidget {
+    class ManageUsers extends \Filament\Resources\Pages\ManageRecords {
+            }
+    }
+
+namespace App\Filament\Resources\Users\Widgets {
+    /**
+     */
+    class UsersStats extends \Filament\Widgets\StatsOverviewWidget {
             }
     }
 
@@ -28912,16 +28755,38 @@ namespace Filament\Widgets {
             }
     }
 
+namespace App\Filament\Pages {
+    /**
+     */
+    class AccountSetting extends \Jeffgreco13\FilamentBreezy\Pages\MyProfilePage {
+            }
+    /**
+     */
+    class ManageGeneralSettings extends \Filament\Pages\SettingsPage {
+            }
+    }
+
 namespace Jeffgreco13\FilamentBreezy\Pages {
     /**
      */
     class MyProfilePage extends \Filament\Pages\Page {
             }
+    /**
+     */
+    class TwoFactorPage extends \Filament\Pages\SimplePage {
+            }
+    }
+
+namespace App\Filament\Widgets {
+    /**
+     */
+    class StatsOverview extends \Filament\Widgets\StatsOverviewWidget {
+            }
     }
 
 namespace AchyutN\FilamentLogViewer {
     /**
-     * @phpstan-import-type LogRow from Log
+     * @phpstan-import-type LogRow from LogProvider
      * @phpstan-type LogCollection Collection<int|string, LogRow>
      * @phpstan-type FilterData array{date?: array{from?: string, until?: string}, file?: array{value: string}}
      */
@@ -29003,7 +28868,7 @@ namespace Illuminate\View {
         /**
          * @see \Filament\Support\SupportServiceProvider::packageBooted()
          * @param array|string|int|null $span
-         * @param array|int|null $start
+         * @param array|string|int|null $start
          * @param array|string|int|null $order
          * @param bool $isHidden
          * @return \Illuminate\View\ComponentAttributeBag
@@ -29074,6 +28939,7 @@ namespace Illuminate\View {
         /**
          * @see \Livewire\Features\SupportPageComponents\SupportPageComponents::registerLayoutViewMacros()
          * @param mixed $data
+         * @return static
          * @static
          */
         public static function layoutData($data = [])
@@ -29084,6 +28950,7 @@ namespace Illuminate\View {
         /**
          * @see \Livewire\Features\SupportPageComponents\SupportPageComponents::registerLayoutViewMacros()
          * @param mixed $section
+         * @return static
          * @static
          */
         public static function section($section)
@@ -29094,6 +28961,7 @@ namespace Illuminate\View {
         /**
          * @see \Livewire\Features\SupportPageComponents\SupportPageComponents::registerLayoutViewMacros()
          * @param mixed $title
+         * @return static
          * @static
          */
         public static function title($title)
@@ -29104,6 +28972,7 @@ namespace Illuminate\View {
         /**
          * @see \Livewire\Features\SupportPageComponents\SupportPageComponents::registerLayoutViewMacros()
          * @param mixed $slot
+         * @return static
          * @static
          */
         public static function slot($slot)
@@ -29115,6 +28984,7 @@ namespace Illuminate\View {
          * @see \Livewire\Features\SupportPageComponents\SupportPageComponents::registerLayoutViewMacros()
          * @param mixed $view
          * @param mixed $params
+         * @return static
          * @static
          */
         public static function extends($view, $params = [])
@@ -29126,6 +28996,7 @@ namespace Illuminate\View {
          * @see \Livewire\Features\SupportPageComponents\SupportPageComponents::registerLayoutViewMacros()
          * @param mixed $view
          * @param mixed $params
+         * @return static
          * @static
          */
         public static function layout($view, $params = [])
@@ -29136,6 +29007,7 @@ namespace Illuminate\View {
         /**
          * @see \Livewire\Features\SupportPageComponents\SupportPageComponents::registerLayoutViewMacros()
          * @param callable $callback
+         * @return static
          * @static
          */
         public static function response($callback)
@@ -29808,7 +29680,7 @@ namespace  {
          * @param string $pageName
          * @param int|null $page
          * @param \Closure|int|null $total
-         * @return \Illuminate\Pagination\LengthAwarePaginator
+         * @return \Illuminate\Pagination\LengthAwarePaginator<int, TModel>
          * @throws \InvalidArgumentException
          * @static
          */
@@ -29825,7 +29697,7 @@ namespace  {
          * @param array|string $columns
          * @param string $pageName
          * @param int|null $page
-         * @return \Illuminate\Contracts\Pagination\Paginator
+         * @return \Illuminate\Pagination\Paginator<int, TModel>
          * @static
          */
         public static function simplePaginate($perPage = null, $columns = [], $pageName = 'page', $page = null)
@@ -29841,7 +29713,7 @@ namespace  {
          * @param array|string $columns
          * @param string $cursorName
          * @param \Illuminate\Pagination\Cursor|string|null $cursor
-         * @return \Illuminate\Contracts\Pagination\CursorPaginator
+         * @return \Illuminate\Pagination\CursorPaginator<int, TModel>
          * @static
          */
         public static function cursorPaginate($perPage = null, $columns = [], $cursorName = 'cursor', $cursor = null)
@@ -29996,7 +29868,7 @@ namespace  {
 
         /**
          * Specify attributes that should be added to any new models created by this builder.
-         * 
+         *
          * The given key / value pairs will also be added as where conditions to the query.
          *
          * @param \Illuminate\Contracts\Database\Query\Expression|array|string $attributes
@@ -30577,7 +30449,7 @@ namespace  {
 
         /**
          * Add a relationship count / exists condition to the query with where clauses.
-         * 
+         *
          * Also load the relationship with the same condition.
          *
          * @param string $relation
@@ -33456,6 +33328,20 @@ namespace  {
         }
 
         /**
+         * Add an "order by" clause to order results by a given sequence of values.
+         *
+         * @param \Illuminate\Contracts\Database\Query\Expression|string $column
+         * @param \Illuminate\Contracts\Support\Arrayable|array $values
+         * @return \Illuminate\Database\Eloquent\Builder<static>
+         * @static
+         */
+        public static function inOrderOf($column, $values)
+        {
+            /** @var \Illuminate\Database\Query\Builder $instance */
+            return $instance->inOrderOf($column, $values);
+        }
+
+        /**
          * Add a raw "order by" clause to the query.
          *
          * @param string $sql
@@ -34625,7 +34511,7 @@ namespace  {
     class FilamentShield extends \BezhanSalleh\FilamentShield\Facades\FilamentShield {}
     class Debugbar extends \Fruitcake\LaravelDebugbar\Facades\Debugbar {}
     class FilamentBreezy extends \Jeffgreco13\FilamentBreezy\Facades\FilamentBreezy {}
-    class Agent extends \Jenssegers\Agent\Facades\Agent {}
+    class Mcp extends \Laravel\Mcp\Facades\Mcp {}
     class Flux extends \Flux\Flux {}
     class Livewire extends \Livewire\Livewire {}
 }
