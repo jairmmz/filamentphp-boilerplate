@@ -40,13 +40,13 @@ class UsersTable
                     ->searchable(),
 
                 TextColumn::make('is_active')
-                    ->label("Estado")
+                    ->label('Estado')
                     ->badge()
-                    ->icon(fn(bool $state) => $state ? Heroicon::CheckCircle : Heroicon::XCircle)
+                    ->icon(fn (bool $state) => $state ? Heroicon::CheckCircle : Heroicon::XCircle)
                     ->formatStateUsing(
-                        fn(bool $state) => $state ? "Activo" : "Inactivo",
+                        fn (bool $state) => $state ? 'Activo' : 'Inactivo',
                     )
-                    ->color(fn(bool $state) => $state ? "success" : "danger")
+                    ->color(fn (bool $state) => $state ? 'success' : 'danger')
                     ->sortable(),
 
                 TextColumn::make('created_at')
@@ -69,11 +69,11 @@ class UsersTable
                     ->searchable()
                     ->preload(),
 
-                SelectFilter::make("is_active")
-                    ->label("Estado")
+                SelectFilter::make('is_active')
+                    ->label('Estado')
                     ->options([
-                        1 => "Activo",
-                        0 => "Inactivo",
+                        1 => 'Activo',
+                        0 => 'Inactivo',
                     ]),
             ])
             ->recordActions([
@@ -103,7 +103,7 @@ class UsersTable
                     ->modalSubmitActionLabel('Sí, exportar')
                     ->modalCancelActionLabel('Cancelar')
                     ->action(function (Table $table, PdfService $service) {
-                        $users = $table->getLivewire()->getFilteredSortedTableQuery()->get();
+                        $users = $table->getLivewire()->getFilteredSortedTableQuery()?->get() ?? collect();
 
                         return $service->generate(
                             'exports.pdf.users',

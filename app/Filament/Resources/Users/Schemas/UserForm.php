@@ -37,7 +37,7 @@ class UserForm
                             ->label('Contraseña')
                             ->prefixIcon(Heroicon::Key)
                             ->password()
-                            ->required(fn (string $context): bool => $context === Operation::Create)
+                            ->required(fn (Operation $context): bool => $context === Operation::Create)
                             ->dehydrated(fn ($state) => filled($state))
                             ->minLength(6)
                             ->revealable()
@@ -47,7 +47,7 @@ class UserForm
                             ->label('Confirmar contraseña')
                             ->prefixIcon(Heroicon::Key)
                             ->password()
-                            ->required(fn (string $context): bool => $context === Operation::Create)
+                            ->required(fn (Operation $context): bool => $context === Operation::Create)
                             ->minLength(6)
                             ->revealable()
                             ->dehydrated(false),

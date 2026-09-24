@@ -4,8 +4,8 @@ namespace App\Providers\Filament;
 
 use AchyutN\FilamentLogViewer\FilamentLogViewer;
 use App\Filament\Pages\AccountSetting;
-use Filament\Http\Middleware\Authenticate;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -83,7 +83,7 @@ class AdminPanelProvider extends PanelProvider
                     ->customMyProfilePage(AccountSetting::class),
 
                 FilamentLogViewer::make()
-                    ->authorize(fn(): bool => auth()->check() && auth()->user()->can('View:LogTable'))
+                    ->authorize(fn (): bool => auth()->check() && (auth()->user()?->can('View:LogTable') ?? false))
                     ->navigationGroup('Análisis')
                     ->navigationLabel('Visor de logs')
                     ->navigationSort(170),

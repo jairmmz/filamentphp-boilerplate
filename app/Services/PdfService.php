@@ -3,15 +3,21 @@
 namespace App\Services;
 
 use Mpdf\Mpdf;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PdfService
 {
+    /**
+     * @param  view-string  $view
+     * @param  array<string, mixed>  $data
+     * @param  array{title?: string, author?: string}  $meta
+     */
     public function generate(
         string $view,
         array $data,
         string $filename,
         array $meta = []
-    ) {
+    ): StreamedResponse {
         $mpdf = new Mpdf([
             'mode' => 'utf-8',
             'format' => 'A4',
@@ -33,13 +39,13 @@ class PdfService
         $mpdf->SetHTMLHeader('
             <div style="border-bottom:2px solid #9ca3af; padding-bottom:5px;">
                 <div style="text-align:center; font-weight:bold; font-size:14px;">
-                    ' . config('app.name') . '
+                    '.config('app.name').'
                 </div>
                 <div style="font-size:13px; font-weight:bold; margin-top:3px;">
-                    ' . ($meta['title'] ?? 'Reporte') . '
+                    '.($meta['title'] ?? 'Reporte').'
                 </div>
                 <div style="font-size:11px; color:#6b7280;">
-                    Fecha de emisión: ' . $now->format('d/m/Y H:i:s') . '
+                    Fecha de emisión: '.$now->format('d/m/Y H:i:s').'
                 </div>
             </div>
         ');
@@ -55,8 +61,8 @@ class PdfService
         $mpdf->WriteHTML($html);
 
         return response()->streamDownload(
-            fn () => print($mpdf->Output('', 'S')),
-            $filename . '_' . $now->format('d-m-Y_H-i-s') . '.pdf'
+            fn () => print ($mpdf->Output('', 'S')),
+            $filename.'_'.$now->format('d-m-Y_H-i-s').'.pdf'
         );
     }
 }
