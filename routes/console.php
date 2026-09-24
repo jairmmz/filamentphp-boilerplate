@@ -11,4 +11,5 @@ Artisan::command('inspire', function (): void {
 })->purpose('Display an inspiring quote');
 
 Schedule::command('health:check')->everyFiveMinutes();
+Schedule::command('health:queue-check-heartbeat')->everyMinute()->withoutOverlapping();
 Schedule::command('activitylog:clean')->daily();
