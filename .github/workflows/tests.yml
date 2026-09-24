@@ -49,6 +49,7 @@ jobs:
           tools: composer:v2
           coverage: xdebug
           extensions: pdo, pdo_mysql
+          cache: composer
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v6

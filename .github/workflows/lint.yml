@@ -34,6 +34,7 @@ jobs:
           tools: composer:v2
           coverage: none
           extensions: pdo, pdo_mysql
+          cache: composer
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
@@ -56,3 +57,6 @@ jobs:
 
       - name: Run PHPStan
         run: composer analyse
+
+      - name: Run Rector
+        run: composer rector:check

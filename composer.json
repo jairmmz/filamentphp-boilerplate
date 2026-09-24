@@ -75,6 +75,9 @@
         "analyse": [
             "phpstan analyse --memory-limit=1G"
         ],
+        "rector:check": [
+            "rector process --dry-run --no-progress-bar"
+        ],
         "ci:check": [
             "Composer\\Config::disableProcessTimeout",
             "@test"
